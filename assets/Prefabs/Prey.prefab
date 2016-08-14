@@ -92,10 +92,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27a517cb6da13b24da8d83823c956562, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sightRange: 0
-  moveSpeed: 0
-  fleeTime: 0
-  expValue: 0
+  sightRange: 10
+  moveSpeed: 3
+  fleeTime: 3
+  expValue: 10
   target: {fileID: 0}
   fleeTimer: 0
   material: {fileID: 0}
@@ -157,6 +157,22 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Constraints
       value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: sightRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: fleeTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: expValue
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -14,9 +14,12 @@ public class GroupState : IPreyState {
 
 	public void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag ("Player")) {
-			prey.target = other.gameObject.transform;
-			prey.fleeTimer = prey.fleeTime;
-			ToFleeState ();
+			float fleeChance = Random.value * 100;
+			if (fleeChance > other.GetComponent<PlayerController>().assimilation) {
+				prey.target = other.gameObject.transform;
+				prey.fleeTimer = prey.fleeTime;
+				ToFleeState ();
+			}
 		}
 	}
 
