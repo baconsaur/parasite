@@ -9,7 +9,7 @@ public class IdleState : IPreyState {
 	}
 
 	public void UpdateState() {
-		Search ();
+		FindTarget ();
 		Seek ();
 	}
 
@@ -36,28 +36,36 @@ public class IdleState : IPreyState {
 		prey.currentState = prey.groupState;
 	}
 
-	void Search () {
+	void FindTarget () {
 		if (prey.target == null) {
 			prey.material.color = Color.green;
-			GameObject[] others = GameObject.FindGameObjectsWithTag (prey.gameObject.tag);
-			int closestIndex = 0;
-			for (int i = 1; i < (others.Length - 1); i++) {
-				if (Vector3.Distance (prey.transform.position, others [i].transform.position) < Vector3.Distance (prey.transform.position, others [closestIndex].transform.position)) {
-					closestIndex = i;
+			GameObject[] others = GameObject.FindGameObjectsWithTag ("Prey");
+			GameObject closest = null;
+
+			foreach (GameObject other in others) {
+				PreyCreature otherPreyCreature = other.GetComponent<PreyCreature> ();
+				if (otherPreyCreature.currentState == otherPreyCreature.groupState) {
+					if (closest == null || Vector3.Distance (prey.transform.position, other.transform.position) < Vector3.Distance (prey.transform.position, closest.transform.position)) {
+						closest = other;
+					}
 				}
 			}
-			prey.target = others [closestIndex].gameObject.transform;
-
+				
 			GameObject player = GameObject.FindGameObjectWithTag ("Player");
-			float fleeChance = Random.value * 100;
-			if (fleeChance > player.GetComponent<PlayerController> ().assimilation && Vector3.Distance (prey.transform.position, player.transform.position) < Vector3.Distance (prey.transform.position, others [closestIndex].transform.position)) {
+			bool playerDisguised = Random.value * 100 < player.GetComponent<PlayerController> ().assimilation;
+
+			if (playerDisguised && Vector3.Distance (prey.transform.position, player.transform.position) < Vector3.Distance (prey.transform.position, closest.transform.position)) {
+				Debug.DrawRay (prey.transform.position, player.transform.position - prey.transform.position, Color.yellow, 1, false);
 				prey.target = player.transform;
+			} else {
+				Debug.DrawRay (prey.transform.position, closest.transform.position - prey.transform.position, Color.green, 1, false);
+				prey.target = closest.transform;
 			}
 		}
 	}
 
 	void Seek () {
 		prey.gameObject.transform.LookAt (prey.target.position);
-		prey.gameObject.transform.position = Vector3.MoveTowards (prey.gameObject.transform.position, prey.target.position - prey.gameObject.transform.position, prey.moveSpeed * Time.deltaTime);
+		prey.gameObject.transform.position = Vector3.MoveTowards (prey.transform.position, prey.target.position, prey.moveSpeed * Time.deltaTime);
 	}
 }

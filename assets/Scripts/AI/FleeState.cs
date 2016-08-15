@@ -44,7 +44,9 @@ public class FleeState : IPreyState {
 
 	private void Flee() {
 		prey.material.color = Color.red;
-		prey.gameObject.transform.LookAt (-prey.target.position);
-		prey.gameObject.transform.position = Vector3.MoveTowards (prey.gameObject.transform.position, prey.target.position, -prey.moveSpeed * Time.deltaTime);
+		if (prey.target != null) {
+			prey.gameObject.transform.LookAt (-prey.target.position);
+			prey.gameObject.transform.position = Vector3.MoveTowards (prey.gameObject.transform.position, prey.target.position, -prey.moveSpeed * Time.deltaTime);
+		}
 	}
 }
