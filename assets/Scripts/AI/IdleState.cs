@@ -37,17 +37,22 @@ public class IdleState : IPreyState {
 	}
 
 	void Search () {
-		if (prey.target == null || prey.target.gameObject.tag != prey.gameObject.tag) {
+		if (prey.target == null) {
 			prey.material.color = Color.green;
 			GameObject[] others = GameObject.FindGameObjectsWithTag (prey.gameObject.tag);
 			int closestIndex = 0;
-			for (int i = 0; i < (others.Length - 1); i++) {
-				if (Vector3.Distance(prey.gameObject.transform.position, others[i].transform.position) > Vector3.Distance(prey.gameObject.transform.position, others[closestIndex].transform.position)) {
+			for (int i = 1; i < (others.Length - 1); i++) {
+				if (Vector3.Distance (prey.transform.position, others [i].transform.position) < Vector3.Distance (prey.transform.position, others [closestIndex].transform.position)) {
 					closestIndex = i;
 				}
 			}
-
 			prey.target = others [closestIndex].gameObject.transform;
+
+			GameObject player = GameObject.FindGameObjectWithTag ("Player");
+			float fleeChance = Random.value * 100;
+			if (fleeChance > player.GetComponent<PlayerController> ().assimilation && Vector3.Distance (prey.transform.position, player.transform.position) < Vector3.Distance (prey.transform.position, others [closestIndex].transform.position)) {
+				prey.target = player.transform;
+			}
 		}
 	}
 

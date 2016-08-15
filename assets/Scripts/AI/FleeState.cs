@@ -19,6 +19,7 @@ public class FleeState : IPreyState {
 
 	public void ToIdleState() {
 		prey.currentState = prey.idleState;
+		prey.target = null;
 	}
 		
 	public void ToFleeState() {
