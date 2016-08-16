@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter (Collider other) {
-		if (other.CompareTag ("Prey")) {
+		if (!playerDisguised && other.CompareTag ("Prey")) {
 			playerDisguised = Random.value * 100 < assimilation;
 		}
 	}
@@ -44,7 +44,8 @@ public class PlayerController : MonoBehaviour {
 		foreach (GameObject prey in preyGroup) {
 			PreyCreature preyCreature = prey.GetComponent<PreyCreature> ();
 			if (preyCreature.currentState == preyCreature.groupState) {
-				if (Vector3.Distance (prey.transform.position, transform.position) > preyCreature.sightRange / 2) {
+				if (Vector3.Distance (transform.position, prey.transform.position) < preyCreature.sightRange/4.5) {
+					Debug.DrawRay (transform.position, prey.transform.position - transform.position, Color.red, 0.02f, false);
 					return;
 				}
 			}

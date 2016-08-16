@@ -15,7 +15,7 @@ public class FleeState : IPreyState {
 	public void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag ("Prey")) {
 			PreyCreature preyCreature = other.GetComponent<PreyCreature> ();
-			if (preyCreature.currentState != preyCreature.fleeState && Random.value * 100 < preyCreature.fleeChance) {
+			if (prey.currentSpeed >= prey.maxSpeed && preyCreature.currentState != preyCreature.fleeState && Random.value * 100 < preyCreature.fleeChance) {
 				preyCreature.target = prey.target;
 				preyCreature.currentState.ToFleeState ();
 			}
@@ -33,6 +33,7 @@ public class FleeState : IPreyState {
 	}
 
 	public void ToIdleState() {
+		prey.currentSpeed = prey.minSpeed;
 		prey.target = prey.TargetClosest ("Food");
 		prey.currentState = prey.idleState;
 	}
@@ -53,7 +54,9 @@ public class FleeState : IPreyState {
 				prey.fleeTimer = prey.fleeTime;
 				prey.currentSpeed = prey.maxSpeed;
 			} else {
-				prey.currentSpeed = prey.minSpeed;
+				if (prey.currentSpeed > prey.minSpeed) {
+					prey.currentSpeed -= Time.deltaTime * 1.2f;
+				}
 				prey.fleeTimer -= Time.deltaTime;
 			}
 			prey.gameObject.transform.LookAt (-prey.target.position);

@@ -14,10 +14,10 @@ public class GroupState : IPreyState {
 
 	public void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag ("Player")) {
-//			if (other.GetComponent<PlayerController>().playerDisguised == false) {
+			if (other.GetComponent<PlayerController>().playerDisguised == false) {
 				prey.target = other.gameObject.transform;
 				ToFleeState ();
-//			}
+			}
 		}
 	}
 

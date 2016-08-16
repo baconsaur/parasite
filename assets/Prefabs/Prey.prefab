@@ -94,7 +94,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sightRange: 12
   minSpeed: 0.3
-  maxSpeed: 4
+  maxSpeed: 3
   fleeTime: 2
   fleeChance: 20
   expValue: 5
@@ -183,7 +183,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: maxSpeed
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: fleeChance

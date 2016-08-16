@@ -13,7 +13,7 @@ public class IdleState : IPreyState {
 	}
 
 	public void OnTriggerEnter(Collider other) {
-		if (other.gameObject.CompareTag ("Player")) {
+		if (other.gameObject.CompareTag ("Player") && other.GetComponent<PlayerController>().playerDisguised == false) {
 			prey.target = other.gameObject.transform;
 			ToFleeState ();
 		} else if (other.gameObject.CompareTag ("Food")) {
