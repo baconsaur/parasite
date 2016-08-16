@@ -3,12 +3,15 @@ using System.Collections;
 
 public class PreyCreature : MonoBehaviour {
 	public float sightRange;
-	public float moveSpeed;
+	public float minSpeed;
+	public float maxSpeed;
 	public float fleeTime;
+	public float fleeChance;
 	public int expValue;
 
 	[HideInInspector] public Transform target;
 	[HideInInspector] public float fleeTimer;
+	[HideInInspector] public float currentSpeed;
 	[HideInInspector] public IPreyState currentState;
 	[HideInInspector] public FleeState fleeState;
 	[HideInInspector] public IdleState idleState;
@@ -20,12 +23,11 @@ public class PreyCreature : MonoBehaviour {
 		idleState = new IdleState (this);
 		groupState = new GroupState (this);
 		material = GetComponent<Renderer> ().material;
-		sightRange = 3f;
-		moveSpeed = 3f;
-		fleeTime = 0.5f;
 	}
 
 	void Start () {
+		target = TargetClosest("Food");
+		currentSpeed = minSpeed;
 		currentState = idleState;
 	}
 
@@ -34,24 +36,27 @@ public class PreyCreature : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.CompareTag ("Player")) {
-			currentState.OnTriggerEnter (other);
-		} else if (other.CompareTag ("Prey")) {
-			PreyCreature prey = other.GetComponent<PreyCreature>();
-
-			if (currentState != fleeState && prey.currentState == prey.fleeState) {
-				currentState.OnTriggerEnter (prey.target.GetComponent<Collider> ());
-			} else if (currentState == idleState) {
-				currentState.OnTriggerEnter (gameObject.GetComponent<Collider> ());
-			}
-		}
+		currentState.OnTriggerEnter (other);
 	}
 
-	void OnCollisionEnter(Collision other) {
-		if (other.gameObject.CompareTag("Player")) {
-			PlayerController playerController = other.gameObject.GetComponent<PlayerController> ();
-			playerController.Assimilate(this);
-			Object.Destroy(gameObject);
+	void OnCollisionEnter(Collision collision) {
+		currentState.OnCollisionEnter (collision);
+	}
+
+	public Transform TargetClosest(string type) {
+		GameObject[] others = GameObject.FindGameObjectsWithTag (type);
+		GameObject closest = null;
+
+		foreach (GameObject other in others) {
+			if (closest == null || Vector3.Distance (transform.position, other.transform.position) < Vector3.Distance (transform.position, closest.transform.position)) {
+				closest = other;
+			}
+		}
+		if (closest != null) {
+			return closest.transform;
+		} else {
+			int randomTargetIndex = Random.Range (0, others.Length);
+			return others [randomTargetIndex].transform;
 		}
 	}
 }

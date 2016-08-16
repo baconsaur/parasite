@@ -7,6 +7,8 @@ public interface IPreyState {
 
 	void OnTriggerEnter(Collider other);
 
+	void OnCollisionEnter(Collision collision);
+
 	void ToIdleState();
 
 	void ToFleeState();

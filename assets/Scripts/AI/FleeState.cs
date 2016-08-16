@@ -9,17 +9,32 @@ public class FleeState : IPreyState {
 	}
 
 	public void UpdateState() {
-		Look ();
 		Flee ();
 	}
 
 	public void OnTriggerEnter(Collider other) {
+		if (other.gameObject.CompareTag ("Prey")) {
+			PreyCreature preyCreature = other.GetComponent<PreyCreature> ();
+			if (preyCreature.currentState != preyCreature.fleeState && Random.value * 100 < preyCreature.fleeChance) {
+				preyCreature.target = prey.target;
+				preyCreature.currentState.ToFleeState ();
+			}
+		}
+	}
 
+	public void OnCollisionEnter(Collision collision) {
+		if (collision.gameObject.CompareTag("Player")) {
+			PlayerController playerController = collision.gameObject.GetComponent<PlayerController> ();
+			if (playerController.assimilation < 100) {
+				playerController.Assimilate (prey);
+				Object.Destroy (prey.gameObject);
+			}
+		}
 	}
 
 	public void ToIdleState() {
+		prey.target = prey.TargetClosest ("Food");
 		prey.currentState = prey.idleState;
-		prey.target = null;
 	}
 		
 	public void ToFleeState() {
@@ -27,26 +42,27 @@ public class FleeState : IPreyState {
 	}
 
 	public void ToGroupState () {
-
+		prey.target = prey.TargetClosest ("Food");
+		prey.currentState = prey.groupState;
 	}
-
-	private void Look() {
-		RaycastHit hit;
-
-		if (Physics.Raycast (prey.gameObject.transform.position, (prey.target.position - prey.gameObject.transform.position), out hit, prey.sightRange) && hit.collider.CompareTag ("Player")) {
-		} else {
-			prey.fleeTimer -= Time.deltaTime;
-			if (prey.fleeTimer <= 0) {
-				ToIdleState ();
-			}
-		}
-	}
-
+		
 	private void Flee() {
 		prey.material.color = Color.red;
-		if (prey.target != null) {
+		if (prey.fleeTimer > 0) {
+			if (Vector3.Distance (prey.transform.position, prey.target.position) < prey.sightRange) {
+				prey.fleeTimer = prey.fleeTime;
+				prey.currentSpeed = prey.maxSpeed;
+			} else {
+				prey.currentSpeed = prey.minSpeed;
+				prey.fleeTimer -= Time.deltaTime;
+			}
 			prey.gameObject.transform.LookAt (-prey.target.position);
-			prey.gameObject.transform.position = Vector3.MoveTowards (prey.gameObject.transform.position, prey.target.position, -prey.moveSpeed * Time.deltaTime);
+
+			prey.gameObject.transform.position = Vector3.MoveTowards (prey.transform.position, prey.target.position, -prey.currentSpeed * Time.deltaTime);
+		} else if (Vector3.Distance(prey.transform.position, prey.TargetClosest("Food").position) < 3) {
+			ToGroupState ();
+		} else {
+			ToIdleState ();
 		}
 	}
 }

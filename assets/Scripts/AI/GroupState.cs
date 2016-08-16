@@ -9,25 +9,29 @@ public class GroupState : IPreyState {
 	}
 
 	public void UpdateState() {
-		Group ();
+		Watch ();
 	}
 
 	public void OnTriggerEnter(Collider other) {
 		if (other.gameObject.CompareTag ("Player")) {
-			float fleeChance = Random.value * 100;
-			if (fleeChance > other.GetComponent<PlayerController>().assimilation) {
+//			if (other.GetComponent<PlayerController>().playerDisguised == false) {
 				prey.target = other.gameObject.transform;
-				prey.fleeTimer = prey.fleeTime;
 				ToFleeState ();
-			}
+//			}
 		}
 	}
 
-	public void ToIdleState() {
+	public void OnCollisionEnter(Collision collision) {
 		
 	}
 
+	public void ToIdleState() {
+		prey.target = prey.TargetClosest ("Food");
+		prey.currentState = prey.idleState;
+	}
+
 	public void ToFleeState() {
+		prey.fleeTimer = prey.fleeTime;
 		prey.currentState = prey.fleeState;
 	}
 
@@ -35,7 +39,10 @@ public class GroupState : IPreyState {
 		Debug.Log ("Can't transition to same state");
 	}
 
-	private void Group() {
+	private void Watch() {
 		prey.material.color = Color.yellow;
+		if (prey.target == null) {
+			ToIdleState ();
+		}
 	}
 }
