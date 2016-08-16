@@ -60,6 +60,11 @@ public class PlayerController : MonoBehaviour {
 		Debug.Log ("Player is " + assimilation + "% assimilated");
 	}
 
+	public void Assimilate (FoodItem food) {
+		assimilation += food.expValue;
+		Debug.Log ("Player is " + assimilation + "% assimilated");
+	}
+
 	void TriggerEndGame() {
 		Debug.Log ("you're fucked bro");
 	}

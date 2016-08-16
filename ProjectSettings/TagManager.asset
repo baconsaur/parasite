@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Food
+  - Prey
+  - Spawner
   layers:
   - Default
   - TransparentFX

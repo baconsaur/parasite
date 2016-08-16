@@ -59,10 +59,9 @@ public class FleeState : IPreyState {
 				}
 				prey.fleeTimer -= Time.deltaTime;
 			}
-			prey.gameObject.transform.LookAt (-prey.target.position);
-
-			prey.gameObject.transform.position = Vector3.MoveTowards (prey.transform.position, prey.target.position, -prey.currentSpeed * Time.deltaTime);
-		} else if (Vector3.Distance(prey.transform.position, prey.TargetClosest("Food").position) < 3) {
+			prey.transform.LookAt (-prey.target.position);
+			prey.transform.position = Vector3.MoveTowards (prey.transform.position, prey.target.position, -prey.currentSpeed * Time.deltaTime);
+		} else if (Vector3.Distance(prey.transform.position, prey.TargetClosest("Food").position) < prey.GetComponent<SphereCollider>().radius) {
 			ToGroupState ();
 		} else {
 			ToIdleState ();

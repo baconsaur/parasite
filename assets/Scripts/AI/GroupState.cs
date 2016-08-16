@@ -9,7 +9,7 @@ public class GroupState : IPreyState {
 	}
 
 	public void UpdateState() {
-		Watch ();
+		Follow ();
 	}
 
 	public void OnTriggerEnter(Collider other) {
@@ -22,7 +22,13 @@ public class GroupState : IPreyState {
 	}
 
 	public void OnCollisionEnter(Collision collision) {
-		
+		if (collision.gameObject.CompareTag("Player")) {
+			PlayerController playerController = collision.gameObject.GetComponent<PlayerController> ();
+			if (playerController.assimilation < 100) {
+				playerController.Assimilate (prey);
+				Object.Destroy (prey.gameObject);
+			}
+		}
 	}
 
 	public void ToIdleState() {
@@ -39,10 +45,13 @@ public class GroupState : IPreyState {
 		Debug.Log ("Can't transition to same state");
 	}
 
-	private void Watch() {
+	private void Follow() {
 		prey.material.color = Color.yellow;
 		if (prey.target == null) {
 			ToIdleState ();
+		} else {
+			prey.transform.LookAt (prey.target.position);
+			prey.transform.position = Vector3.MoveTowards (prey.transform.position, prey.target.position, prey.currentSpeed * Time.deltaTime);
 		}
 	}
 }
