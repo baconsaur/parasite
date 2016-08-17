@@ -37,6 +37,15 @@ public class Spawner : MonoBehaviour {
 			Random.Range (transform.position.x - spawnRadius, transform.position.x + spawnRadius), 
 			Random.Range (transform.position.y - spawnRadius, transform.position.y + spawnRadius),
 			0);
+		
+		if (spawnPrefab.CompareTag ("Prey")) {
+			Vector3 topCorner = Camera.main.ScreenToWorldPoint (new Vector3(0, 0, 18));
+			Vector3 bottomCorner = Camera.main.ScreenToWorldPoint (new Vector3(Screen.width, Screen.height, 18));
+			bool illegalSpawn = spawnerSpawn.x > topCorner.x && spawnerSpawn.x < bottomCorner.x && spawnerSpawn.y > topCorner.y && spawnerSpawn.y < bottomCorner.y;
+			if (illegalSpawn) {
+				return;
+			}
+		}
 		Instantiate (spawnPrefab, spawnerSpawn, new Quaternion());
 	}
 }
