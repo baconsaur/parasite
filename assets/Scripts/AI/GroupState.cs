@@ -46,7 +46,7 @@ public class GroupState : IPreyState {
 	}
 
 	private void Follow() {
-		prey.material.color = Color.yellow;
+//		prey.material.color = Color.yellow;
 		if (prey.target == null) {
 			ToIdleState ();
 		} else {

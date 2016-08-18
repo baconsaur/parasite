@@ -45,7 +45,7 @@ public class IdleState : IPreyState {
 	}
 
 	void Seek () {
-		prey.material.color = Color.green;
+//		prey.material.color = Color.green;
 		if (prey.target == null) {
 			prey.target = prey.TargetClosest ("Food");
 		}

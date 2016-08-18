@@ -3,6 +3,8 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour {
 	public float moveSpeed;
+	public Mesh trueForm;
+	public Mesh dittoForm;
 
 	[HideInInspector] public int assimilation = 0;
 	[HideInInspector] public bool playerDisguised = false;
@@ -24,7 +26,7 @@ public class PlayerController : MonoBehaviour {
 		transform.Translate(horizontalTranslation, verticalTranslation, 0);
 
 		if (assimilation < 100 && playerDisguised) {
-			GetComponent<Renderer> ().material.color = Color.cyan;
+			GetComponent<MeshFilter> ().mesh = dittoForm;
 			ProximityCheck ();
 		} else if (assimilation >= 100) {
 			playerDisguised = true;
@@ -52,7 +54,7 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		playerDisguised = false;
-		GetComponent<Renderer> ().material.color = Color.grey;
+		GetComponent<MeshFilter> ().mesh = trueForm;
 	}
 
 	public void Assimilate (PreyCreature prey) {

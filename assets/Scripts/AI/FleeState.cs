@@ -48,7 +48,7 @@ public class FleeState : IPreyState {
 	}
 		
 	private void Flee() {
-		prey.material.color = Color.red;
+//		prey.material.color = Color.red;
 		if (prey.fleeTimer > 0) {
 			if (Vector3.Distance (prey.transform.position, prey.target.position) < prey.sightRange) {
 				prey.fleeTimer = prey.fleeTime;
