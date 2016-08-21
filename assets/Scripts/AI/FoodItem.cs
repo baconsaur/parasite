@@ -15,6 +15,7 @@ public class FoodItem : MonoBehaviour {
 
 	void Update () {
 		transform.position += transform.forward * Time.deltaTime * moveSpeed;
+		transform.Rotate(Time.deltaTime, 0, 0);
 	}
 
 	void OnCollisionEnter (Collision collision) {

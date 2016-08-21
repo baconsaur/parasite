@@ -6,14 +6,21 @@ public class PlayerController : MonoBehaviour {
 	public Mesh trueForm;
 	public Mesh dittoForm;
 
-	[HideInInspector] public int assimilation = 0;
-	[HideInInspector] public bool playerDisguised = false;
+	[HideInInspector] public int assimilation;
+	[HideInInspector] public bool playerDisguised;
+	[HideInInspector] private Light halo;
+
+	private float baseGlow;
 
 	void Awake () {
 		moveSpeed = 4f;
+		assimilation = 0;
+		playerDisguised = false;
 	}
 
 	void Start () {
+		halo = GetComponent<Light>();
+		baseGlow = halo.range;
 	}
 
 	void Update () {
@@ -36,7 +43,10 @@ public class PlayerController : MonoBehaviour {
 
 	void OnTriggerEnter (Collider other) {
 		if (!playerDisguised && other.CompareTag ("Prey")) {
-			playerDisguised = Random.value * 100 < assimilation;
+			float disguiseChance = Random.value * 100;
+			if (disguiseChance < assimilation) {
+				playerDisguised = true;
+			}
 		}
 	}
 
@@ -46,28 +56,33 @@ public class PlayerController : MonoBehaviour {
 		foreach (GameObject prey in preyGroup) {
 			PreyCreature preyCreature = prey.GetComponent<PreyCreature> ();
 			if (preyCreature.currentState == preyCreature.groupState) {
-				if (Vector3.Distance (transform.position, prey.transform.position) < preyCreature.sightRange/4.5) {
+				if (Vector3.Distance (transform.position, prey.transform.position) < preyCreature.sightRange) {
 					Debug.DrawRay (transform.position, prey.transform.position - transform.position, Color.red, 0.02f, false);
 					return;
 				}
 			}
 		}
 
-		playerDisguised = false;
-		GetComponent<MeshFilter> ().mesh = trueForm;
+		if (assimilation < 100) {
+			playerDisguised = false;
+			GetComponent<MeshFilter> ().mesh = trueForm;
+		}
 	}
 
 	public void Assimilate (PreyCreature prey) {
 		assimilation += prey.expValue;
-		Debug.Log ("Player is " + assimilation + "% assimilated");
+		halo.range = baseGlow + (assimilation * 0.01f);
+		Debug.Log (halo.range);
 	}
 
 	public void Assimilate (FoodItem food) {
 		assimilation += food.expValue;
-		Debug.Log ("Player is " + assimilation + "% assimilated");
+		halo.range = baseGlow + (assimilation * 0.01f);
+		Debug.Log (halo.range);
 	}
 
 	void TriggerEndGame() {
+		GetComponent<MeshFilter> ().mesh = dittoForm;
 		Debug.Log ("you're fucked bro");
 	}
 }

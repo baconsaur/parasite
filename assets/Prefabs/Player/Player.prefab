@@ -64,6 +64,7 @@ GameObject:
   - 114: {fileID: 11406142}
   - 33: {fileID: 3399596}
   - 23: {fileID: 2372244}
+  - 108: {fileID: 10895952}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -188,7 +189,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177332}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 4300002, guid: 057879f576fdb784ca89119d581801c7, type: 3}
 --- !u!54 &5421906
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -251,6 +252,39 @@ Light:
   m_ShadowRadius: 0
   m_ShadowAngle: 0
   m_AreaSize: {x: 1, y: 1}
+--- !u!108 &10895952
+Light:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177332}
+  m_Enabled: 1
+  serializedVersion: 6
+  m_Type: 2
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 1.5
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 1
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_Lightmapping: 4
+  m_BounceIntensity: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_AreaSize: {x: 1, y: 1}
 --- !u!114 &11406142
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -263,8 +297,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4
-  trueForm: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  dittoForm: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  trueForm: {fileID: 4300002, guid: 057879f576fdb784ca89119d581801c7, type: 3}
+  dittoForm: {fileID: 4300002, guid: 2f911a658cf6f514f9e5cb9bc67ade7d, type: 3}
   assimilation: 0
   playerDisguised: 0
 --- !u!114 &11486944
@@ -302,7 +336,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.8
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &100100000
 Prefab:
@@ -314,11 +348,39 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: trueForm
       value: 
-      objectReference: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+      objectReference: {fileID: 4300002, guid: 057879f576fdb784ca89119d581801c7, type: 3}
     - target: {fileID: 0}
       propertyPath: dittoForm
       value: 
-      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+      objectReference: {fileID: 4300002, guid: 2f911a658cf6f514f9e5cb9bc67ade7d, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_DrawHalo
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Range
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_BounceIntensity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Intensity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300002, guid: 057879f576fdb784ca89119d581801c7, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Radius
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 177332}

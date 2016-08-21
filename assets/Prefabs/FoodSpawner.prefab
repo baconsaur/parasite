@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d01ccf482e746d4468c8712852a93051, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPrefab: {fileID: 114986, guid: d84b1090f96df9d45841514303e721c2, type: 2}
+  spawnPrefab: {fileID: 136910, guid: d84b1090f96df9d45841514303e721c2, type: 2}
   spawnChance: 20
   maxCooldown: 6
   spawnRadius: 20
@@ -306,7 +306,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4289200100
+        rgba: 4293519849
       minMaxState: 0
     startSize:
       scalar: 0.13
@@ -670,10 +670,10 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4279144910
+          rgba: 4293784050
         key1:
           serializedVersion: 2
-          rgba: 4280549535
+          rgba: 4286741906
         key2:
           serializedVersion: 2
           rgba: 1117453
@@ -1664,7 +1664,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: spawnPrefab
       value: 
-      objectReference: {fileID: 114986, guid: d84b1090f96df9d45841514303e721c2, type: 2}
+      objectReference: {fileID: 136910, guid: d84b1090f96df9d45841514303e721c2, type: 2}
     - target: {fileID: 0}
       propertyPath: InitialModule.maxNumParticles
       value: 125
@@ -1716,6 +1716,18 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: ColorModule.gradient.maxGradient.m_NumColorKeys
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: InitialModule.startColor.maxColor.rgba
+      value: 4293519849
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.maxGradient.key0.rgba
+      value: 4293784050
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ColorModule.gradient.maxGradient.key1.rgba
+      value: 4286741906
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

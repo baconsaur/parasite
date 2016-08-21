@@ -85,7 +85,7 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &2124059565
+--- !u!1001 &2105827922
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -124,13 +124,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2025152, guid: 9e0226b08b91d7f4fabbacb43d26f185, type: 2}
-      propertyPath: m_HDR
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2372244, guid: 9e0226b08b91d7f4fabbacb43d26f185, type: 2}
+    - target: {fileID: 10895952, guid: 9e0226b08b91d7f4fabbacb43d26f185, type: 2}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Radius
+      value: 4.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9e0226b08b91d7f4fabbacb43d26f185, type: 2}
