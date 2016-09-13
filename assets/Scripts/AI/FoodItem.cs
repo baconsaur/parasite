@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FoodItem : MonoBehaviour {
+public class FoodItem : MonoBehaviour, IConsumable {
 	public float moveSpeed;
 	public int expValue;
 
@@ -20,11 +20,16 @@ public class FoodItem : MonoBehaviour {
 
 	void OnCollisionEnter (Collision collision) {
 		if (collision.gameObject.CompareTag("Player")) {
-			PlayerController playerController = collision.gameObject.GetComponent<PlayerController> ();
-			if (playerController.assimilation < 100) {
-				playerController.Assimilate (this);
-				Object.Destroy (gameObject);
-			}
+			IPredator player = collision.gameObject.GetComponent<PlayerController> ();
+			player.Assimilate (this);
 		}
+	}
+
+	public int GetExpValue () {
+		return expValue;
+	}
+
+	public void Die () {
+		Destroy (gameObject);
 	}
 }

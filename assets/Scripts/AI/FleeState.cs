@@ -24,11 +24,8 @@ public class FleeState : IPreyState {
 
 	public void OnCollisionEnter(Collision collision) {
 		if (collision.gameObject.CompareTag("Player")) {
-			PlayerController playerController = collision.gameObject.GetComponent<PlayerController> ();
-			if (playerController.assimilation < 100) {
-				playerController.Assimilate (prey);
-				Object.Destroy (prey.gameObject);
-			}
+			IPredator player = collision.gameObject.GetComponent<PlayerController> ();
+			player.Assimilate (prey);
 		}
 	}
 

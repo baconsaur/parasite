@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PreyCreature : MonoBehaviour {
+public class PreyCreature : MonoBehaviour, IConsumable {
 	public float sightRange;
 	public float minSpeed;
 	public float maxSpeed;
@@ -41,6 +41,14 @@ public class PreyCreature : MonoBehaviour {
 
 	void OnCollisionEnter(Collision collision) {
 		currentState.OnCollisionEnter (collision);
+	}
+
+	public int GetExpValue () {
+		return expValue;
+	}
+
+	public void Die () {
+		Destroy (gameObject);
 	}
 
 	public Transform TargetClosest(string type) {

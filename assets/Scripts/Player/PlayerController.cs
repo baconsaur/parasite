@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IPredator {
 	public float moveSpeed;
 	public Mesh trueForm;
 	public Mesh dittoForm;
@@ -69,16 +69,12 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	public void Assimilate (PreyCreature prey) {
-		assimilation += prey.expValue;
-		halo.range = baseGlow + (assimilation * 0.01f);
-		Debug.Log (halo.range);
-	}
-
-	public void Assimilate (FoodItem food) {
-		assimilation += food.expValue;
-		halo.range = baseGlow + (assimilation * 0.01f);
-		Debug.Log (halo.range);
+	public void Assimilate (IConsumable consumable) {
+		if (assimilation < 100) {
+			assimilation += consumable.GetExpValue ();
+			consumable.Die ();
+			halo.range = baseGlow + (assimilation * 0.01f);
+		}
 	}
 
 	void TriggerEndGame() {
